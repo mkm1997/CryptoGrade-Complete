@@ -1,0 +1,315 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <br/>
+    <body style="font-family:Ubuntu;background-color:white;">
+        <div class="container">
+            <div class="jumbotron" align="center" id="registerjt">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h1 style="color:black;">Create New Account</h1>
+                    <br/>
+                    <h5 style="color:black;">Please enter your credentials below to create a new account and begin voting.</h5>
+                    <br/>
+                    {% if takenusername %}
+                        <h3 style="color:red;">That username is already taken</h3>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                    <div class="form-group has-danger" style="margin-bottom:0px;">
+                                        <input type="text" name="inputUsername" class="form-control form-control-danger" placeholder="Username" required autofocus>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="email" name="inputEmail" class="form-control" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPasswordConfirm" class="form-control" placeholder="Password (Confirm)" required>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% elif invalidusername %}
+                        <h3 style="color:red;">Usernames can only contain letters, digits, and characters @+.-_</h3>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                    <div class="form-group has-danger" style="margin-bottom:0px;">
+                                        <input type="text" name="inputUsername" class="form-control form-control-danger" placeholder="Username" required autofocus>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="email" name="inputEmail" class="form-control" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPasswordConfirm" class="form-control" placeholder="Password (Confirm)" required>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% elif tooshortusername %}
+                        <h3 style="color:red;">Usernames must be at least 3 characters and at most 32 characters long</h3>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                    <div class="form-group has-danger" style="margin-bottom:0px;">
+                                        <input type="text" name="inputUsername" class="form-control form-control-danger" placeholder="Username" required autofocus>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="email" name="inputEmail" class="form-control" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPasswordConfirm" class="form-control" placeholder="Password (Confirm)" required>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% elif takenemail %}
+                        <h3 style="color:red;">That email is already in use</h3>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="text" name="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                    <div class="form-group has-danger" style="margin-bottom:0px;">
+                                        <input type="email" name="inputEmail" class="form-control form-control-danger" placeholder="Email Address" required>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPasswordConfirm" class="form-control" placeholder="Password (Confirm)" required>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% elif invalidemail %}
+                        <h3 style="color:red;">You entered an invalid email</h3>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="text" name="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                    <div class="form-group has-danger" style="margin-bottom:0px;">
+                                        <input type="email" name="inputEmail" class="form-control form-control-danger" placeholder="Email Address" required>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPasswordConfirm" class="form-control" placeholder="Password (Confirm)" required>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% elif passwordmismatch %}
+                        <h3 style="color:red;">Your passwords didn't match</h3>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="text" name="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="email" name="inputEmail" class="form-control" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                    <div class="form-group has-danger" style="margin-bottom:0px;">
+                                        <input type="password" name="inputPassword" class="form-control form-control-danger" placeholder="Password" required>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                    <div class="form-group has-danger" style="margin-bottom:0px;">
+                                        <input type="password" name="inputPasswordConfirm" class="form-control form-control-danger" placeholder="Password (Confirm)" required>
+                                    </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% elif tooshortpassword %}
+                        <h3 style="color:red;">Passwords must be at least 8 characters long</h3>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="text" name="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="email" name="inputEmail" class="form-control" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                    <div class="form-group has-danger" style="margin-bottom:0px;">
+                                        <input type="password" name="inputPassword" class="form-control form-control-danger" placeholder="Password" required>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPasswordConfirm" class="form-control" placeholder="Password (Confirm)" required>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% elif bad_captcha %}
+                        <h3 style="color:red;">Your captcha didn't check out - please try again</h3>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="text" name="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="email" name="inputEmail" class="form-control" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPasswordConfirm" class="form-control" placeholder="Password (Confirm)" required>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="text" name="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="email" name="inputEmail" class="form-control" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <input type="password" name="inputPasswordConfirm" class="form-control" placeholder="Password (Confirm)" required>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="g-recaptcha" data-sitekey="6LetQ1EUAAAAAGYd2blPnXHIvX1DZ2VowhlXa6AT"></div>
+                        <br/>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button style="border-radius:15px;cursor:pointer;" class="btn btn-lg btn-danger btn-block" type="submit">REGISTER</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div> <!-- /container -->
+    </body>
+
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+<style>
+.textim {
+    position: relative;
+    text-align: center;
+    color: white;
+    width:auto;
+    margin:0;
+}
+
+
+.centered {
+    position: absolute;
+    top: 5%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+}
+</style>
+
+<body style="font-family:Ubuntu;background-color:#FFFFFF;" id="overlay">
+
+        {% load staticfiles %}
+
+        <div class="container">
+            <div class="jumbotron" id="homeimgjumbo">
+                <div class="row justify-content-center" style="align-items:center;" align="center">
+                    <div class="col-10" align="center">
+                        <br>
+
+
+                        <div class="textim">
+
+                        <img alt="CryptoGrade Logo" class="img-responsive" src="{% static 'coinviewer/cg_logo_large.png' %}" width="100%" style="padding-bottom:0px;">
+                        <div class="centered"><h2 id ="text" style="color:black" >{{sum}} VOTES AND COUNTING</h2></div>
+
+                        </div>
+                            <!--div class="container-fluid">
+                        <div class="centered"><h2 id ="text" style="font-family: 'Do Hyeon', sans-serif;color:black" >{{sum}} VOTES AND COUNTING</h2></div>
+                            </div-->
+
+
+
+
+                        <h2 style="color:black">The First Ever Crowdsourced Sentiment Platform For Cryptocurrency</h2>
+
+
+                        <a href="/coins"><button type="button" class="btn btn-success" style="margin-bottom:30px;margin-top:30px;cursor:pointer;border-radius:15px 0px 0px 15px;">Browse Coins</button></a>
+                        {% if user.is_authenticated %}
+                            <a href="/login"><button type="button" class="btn btn-danger" style="margin-bottom:30px;margin-top:30px;cursor:pointer;border-radius:0px 15px 15px 0px;">Profile</button></a>
+                        {% else %}
+                            <a href="/login"><button type="button" class="btn btn-danger" style="margin-bottom:30px;margin-top:30px;cursor:pointer;border-radius:0px 15px 15px 0px;">Log In</button></a>
+                        {% endif %}
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="jumbotron" id="topfourcoins">
+                <div class="row justify-content-center" style="align-items:center">
+                    <div class="col-lg-2">
+                        <h2 style="font-family: 'Oswald';color:white;">Today's</h2>
+                        <h1 style="color:white;font-family:'Oswald'">Gainers</h1>
+                    </div>
+                    {% for coin in top4 %}
+                        {% cycle '<div class="col-lg-4" style="margin-right:5px;margin-left:5px;">' '' %}
+                        {% cycle '<div class="row justify-content-center" style="align-items: center;">' '' %}
+                        <div class="col" align="center" style="padding-top: 20px;padding-bottom: 10px;border: 3px solid #1f1f1f;background-color:#afafaf;margin-left:5px;margin-right:5px;margin-bottom:10px;border-radius:15px;width:40px;">
+                            <a href="/coins/{{ coin.ticker }}">
+
+                                {% with 'coinviewer/logos/'|add:coin.ticker|add:'.svg'|lower as image_static %}
+
+                                    <div class="row justify-content-center">
+                                        <img alt="{{ coin.name }} Logo" class="img-responsive" src="{% static image_static %}" style="height:30px;width:30px;margin-bottom:10px;margin-right:10px;">
+                                        <h4 style="color:black;">{{ coin.ticker }}</h4>
+                                    </div>
+                                    <h3 style="color:{{ coin.pct_change_color }};">{{ coin.pct_change_day }}%</h3>
+
+                                {% endwith %}
+
+                            </a>
+                        </div>
+                        {% cycle '' '</div>' %}
+                        {% cycle '' '</div>' %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="jumbotron" id="bottomfourcoins">
+                <div class="row justify-content-center" style="align-items:center">
+                    {% for coin in bot4 %}
+                        {% cycle '<div class="col-lg-4" style="margin-right:5px;margin-left:5px;">' '' %}
+                        {% cycle '<div class="row justify-content-center" style="align-items: center;margin-bottom:10px;">' '' %}
+                        <div class="col" align="center" style="padding-top: 20px;padding-bottom: 10px;border: 3px solid #1f1f1f;background-color:#afafaf;margin-left:5px;margin-right:5px;border-radius:15px;width:40px;">
+                            <a href="/coins/{{ coin.ticker }}">
+
+                                {% with 'coinviewer/logos/'|add:coin.ticker|add:'.svg'|lower as image_static %}
+
+                                    <div class="row justify-content-center">
+                                        <img alt="{{ coin.name }} Logo" class="img-responsive" src="{% static image_static %}" style="height:30px;width:30px;margin-bottom:10px;margin-right:10px;">
+                                        <h4 style="color:black;">{{ coin.ticker }}</h4>
+                                    </div>
+                                    <h3 style="color:{{ coin.pct_change_color }};">{{ coin.pct_change_day }}%</h3>
+
+                                {% endwith %}
+
+                            </a>
+                        </div>
+                        {% cycle '' '</div>' %}
+                        {% cycle '' '</div>' %}
+                    {% endfor %}
+                    <div class="col-lg-2" style="display:block">
+                        <div style="float: right;">
+                            <h2 style="font-family: 'Oswald';color:white;">Today's</h2>
+                            <h1 style="font-family: 'Oswald';color:white;transform:translate(-11%,0%);">Losers</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="jumbotron" id="homepageblurbs">
+                <h1 align="center" style="color:black;font-weight: bold;">Ratings by the <span style="color:rgb(92, 184, 92);">cryptocurrency community</span>:</h1>
+                <br/>
+                <h1 align="center" style="color:black;font-weight: bold;">Because no <span style="color:rgb(217, 83, 79);">central authority</span> should decide ratings for <span style="color:rgb(92, 184, 92);">decentralized currencies</span></h1>
+                <div class="container">
+                    <div class="row justify-content-center" style="display:flex;align-items:center;margin-top:30px;">
+                        <div class="col-lg-4" align="center">
+                            <img alt="Scale" src="{% static 'CoinViewer/scale.png' %}" style="max-height:225px;max-width:225px;margin-top:50px;margin-bottom:50px;">
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 align="left" style="font-weight:bold;">Community Opinion, <span style="color:#f67a21;">Distilled</span></h2>
+                            <h5 style="color:black" align="left">It’s easy to get caught up in the misinformation and hype in Cryptocurrency. CryptoGrade lets the community decide through real-time voting what is fact or fiction. Sentiment can change in an instant, so don’t blink. Transparency has arrived. Let the voting begin.</h5>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="display:flex;align-items:center;margin-top:0px;">
+                        <div class="col-lg-4 col-lg-4 push-lg-6" align="center">
+                            <img alt="Globe" src="{% static 'coinviewer/globe.png' %}" style="max-height:225px;max-width:225px;margin-top:50px;margin-bottom:50px;">
+                        </div>
+                        <div class="col-lg-6 col-lg-6 pull-lg-4">
+                            <h2 align="right" style="font-weight:bold;"><span style="color:blue;">Real-Time</span> Tracking</h2>
+                            <h5 style="color:black" align="right">We obtain votes from users all around the world, ensuring an extremely representative sample of general community opinion. Our technology allows users to observe the reactions of the community to market events as they play out.</h5>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="display:flex;align-items:center;margin-top:0px;">
+                        <div class="col-lg-4" align="center">
+                            <img alt="News" src="{% static 'coinviewer/news_icon.png' %}" style="max-height:225px;max-width:225px;margin-top:50px;margin-bottom:50px;">
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 align="left" style="font-weight:bold;"><span style="color:#0FCF0F;">Equal</span> Representation</h2>
+                            <h5 style="color:black" align="left">Each user only has one vote per category per coin. If they would like, Cryptograde users are allowed and encouraged to change their vote depending on certain news that comes out for any coin. Our sentiment indicators were built to reflect major changes that occur within any given coin’s community. </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+<script>
+$(document).ready(function () {
+    var interval = setInterval(refresh, 5000);
+});
+
+function refresh() {
+
+$(document).ready(function(e){
+
+       //e.preventDefault();
+            $.ajax(
+            {
+                type:"POST",
+                url: "{%url 'aj'%}",
+
+                success: function( data )
+                {
+
+                    $("#text").html(data+" VOTES AND COUNTING");
+
+
+
+                }
+            });
+            })
+
+
+
+ }
+</script>
+
+</body>
+
+{% endblock %}

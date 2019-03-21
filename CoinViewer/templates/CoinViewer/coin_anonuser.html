@@ -1,0 +1,183 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+
+<body style="font-family:Ubuntu;background-color:white;" id="overlay">
+
+    <br/>
+
+    {% if not exists %}
+        <div class="container">
+            <div class="jumbotron" align="center">
+                <h1 style="color:red">PAGE NOT FOUND</h1>
+                <p style="color:black">These aren't the droids you're looking for. <a href="/coins" style="color:blue">Return to coins list</a></p>
+                <p><a href="/faq" style="color:blue">Why can't I find a coin on here?</a></p>
+            </div>
+        </div>
+
+
+    {% else %}
+        <div class="container">
+            <div class="jumbotron" id="coinjt">
+
+                <!-- Stats Table -->
+                <div class="row justify-content-center" style="align-items:center">
+                    <div class="col-md-8">
+                        <table class="table table-hover table-striped table-sm table-responsive" id="minitable">
+                            <tbody>
+                                <tr style="font-weight:bold;">
+                                    <th>Ticker</th>
+                                    <th>Price (USD)</th>
+                                    <th>Total Votes</th>
+                                    <th>Pos Votes</th>
+                                    <th>Neg Votes</th>
+                                    <th>Day % Change</th>
+                                    <th style="padding-right:100px">Overall Sentiment</th>
+                                </tr>
+                                <tr>
+                                    <th>{{ coin.ticker }}</th>
+                                    <th>{{ coin.price_usd }}</th>
+                                    <th style="font-weight:bold;">{{ coin.total_votes }}</th>
+                                    <th style="color:#229819;font-weight:bold">{{ coin.total_votes_pro }}</th>
+                                    <th style="color:#af3434;font-weight:bold">{{ coin.total_votes_con }}</th>
+                                    <th style="color:{{ coin.pct_change_color }}">{{ coin.pct_change_day }}%</th>
+                                    <th style="color:{{ coin.total_sentiment_pct_color }}">{{ coin.total_sentiment_descr }}</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Back button -->
+                <div class="row justify-content-center text-center">
+                    <div class="col align-self-center">
+                        <a href="/coins"><button type="button" class="btn btn-outline-danger" style="cursor:pointer;border-radius:15px;">Return To Coins List</button></a>
+                    </div>
+                </div>
+                <br/>
+
+                <!-- Header Row -->
+                <div class="row" style="align-items: center;">
+                    <div class="col-md-3" align="center">
+                        {% load staticfiles %}
+                        {% with 'CoinViewer/logos/'|add:coin.ticker|add:'.svg'|lower as image_static %}
+                            <img alt="{{ coin.name }} Logo" class="img-responsive" src="{% static image_static %}" style="width:80px;height:80px;vertical-align: middle"/>
+                        {% endwith %}
+                    </div>
+                    <div class="col-md-6" align="center">
+                        <h1 style="padding-top:10px;border:5px solid rgba(0, 0, 0, 0.0)"><a rel="nofollow" href="https://coinmarketcap.com/currencies/{{ coin.cmc_id }}/" style="color:#024af4;" target="_blank">{{ coin.name }}</a></h1>
+                    </div>
+                    <div class="col-md-3" align="center">
+                        <p style="font-weight:bold;margin-top:5px;margin-bottom:0px;">OVERALL</p>
+                        <h2 style="font-weight:bold;color:{{ coin.total_sentiment_pct_color }};">{{ coin.total_sentiment_pct }}%</h2>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="row justify-content-center" style="align-items:center">
+                    <div class="col-md-8" align="center">
+                        <h3 style="font-weight: bold;color: red;">You must be logged in to vote on coins.</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-center" style="align-items:center;">
+                    <div class="col-md-8" align="center">
+                        <p style="color:#afafaf;padding:0px;margin:0px;">Need clarification on a category? Click the category name for a brief description.</p>
+                    </div>
+                </div>
+                <br/>
+
+                <!-- Main Content Row -->
+                <div class="row" style="align-items:center">
+                    <div class="col-md-12">
+                        <!-- Ratings -->
+                        <div class="row">
+                        {% load staticfiles %}
+                            {% for cat in cats %}
+
+                                <div class="col-lg-6">
+                                {% if forloop.counter|divisibleby:2 %}
+                                    <div class="row" style="align-items:center;padding-top:5px;padding-bottom:5px;border-top:2px solid darkgray;">
+                                {% else %}
+                                    <div class="row" style="align-items:center;padding-top:5px;padding-bottom:5px;border-top:2px solid darkgray;border-right:2px solid darkgray;">
+                                {% endif %}
+
+                                        <div class="col-sm-6" align="center">
+                                            <div class="row" style="align-items:center;">
+                                                <div class="col" style="padding-top:5px;">
+                                                <button class="btn btn-outline-secondary" style="border:0px transparent;border-radius:50px;padding: 17px 14px 9px 14px;cursor:help;" type="button" data-toggle="popover" data-placement="bottom" data-content="{{ cat.category.tooltip }}">
+                                                <h6 class="votespro" style="color:#0FCF0F;margin-bottom:3px;">{{ cat.category.pos_name }} (<span>{{ cat.votes_pro }}</span>)</h6>
+                                                    <h2 style="padding:0px;margin:0px;color:black;font-weight:bold;font-family:Ubuntu;text-transform:uppercase;">
+                                                        {{ cat.category.category_name }}
+                                                    </h2>
+                                                <h6 class="votescon" style="color:#ff4d4d;margin-top:3px;">{{ cat.category.neg_name }} (<span>{{ cat.votes_con }}</span>)</h6>
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6" align="center">
+                                            <div class="row" style="align-items: center">
+                                                <div class="col-6">
+                                                    <div style="width:100px;">
+
+                                                        <div class="arrow-up" style="border-bottom-color:#4f4f4f"></div>
+
+                                                        <div class="ratingcircleoverlay">
+                                                            <div style="background-color:#66ff66;height:{{ cat.px_green }}px;width:100px;border-bottom:2px solid black;"></div>
+                                                            <div style="background-color:#ff4d4d;height:{{ cat.px_red }}px;width:100px;"></div>
+                                                        </div>
+
+                                                        <div class="arrow-down" style="border-top-color:#4f4f4f"></div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-6" style="padding-top:8px;">
+                                                    <h4 style="font-weight:bold">{{ cat.px_green }}%</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+                                {% cycle '' '<div class="w-100"></div>' %}
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center" style="margin-top:30px;text-align:center;">
+                    <p style="color:#afafaf">Have a potential improvement, issue, or suggestion for our voting system? Please <a href="/contact" style="color:#8f8fcf">contact us</a> to provide information</p>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+</body>
+
+<script>
+// Enable popovers
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+// Set inactive arrow behavior
+$(document).ready(function(){
+
+    // Set behavior of up arrows
+    $(".arrow-up").click(function(){
+        window.location = "/login";
+    });
+
+    // Set behavior of down arrows
+    $(".arrow-down").click(function(){
+        window.location = "/login";
+    });
+
+});
+</script>
+
+{% endblock %}

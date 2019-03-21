@@ -1,0 +1,41 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+
+    <br/>
+    <body style="font-family:Ubuntu;background-color:white;">
+        <div class="container">
+            <div class="jumbotron" align="center" id="registerjt">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h1 style="color:black;">Delete Your Account</h1>
+                    <br/>
+                    <h5 style="font-weight:bold;">Are you sure you wish to do this? All your vote data will be wiped from the server!</h5>
+                    <br/>
+                    <div class="row justify-content-center">
+                        <div class="col-9">
+                            <p style="color:#afafaf">Changes to coin scores may take up to 5 minutes to propagate through the server. In the meantime, please <a href="/contact" style="color:#8f8fcf">contact us</a> if you feel so inclined to tell us why you are leaving.</p>
+                        </div>
+                    </div>
+                    <br/>
+                    {% if invalid_creds %}
+                        <h3 style="color:red;">Your current password was entered incorrectly.</h3>
+                        <br/>
+                    {% endif %}
+                    <p>Please enter your password to confirm:</p>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <input type="password" name="inputPass" class="form-control" placeholder="Enter Password" required autofocus>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <button style="cursor:pointer;font-weight:bolder;border-radius:15px;" class="btn btn-lg btn-danger btn-block" type="submit">DELETE</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- /container -->
+    </body>
+
+{% endblock %}

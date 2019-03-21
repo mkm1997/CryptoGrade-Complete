@@ -1,0 +1,79 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+
+    <br/>
+    <body style="font-family:Ubuntu;background:white">
+    <div class="container">
+        <div class="jumbotron" id="profilejt">
+
+            <!-- Central Username -->
+            <div class="row justify-content-center text-center">
+                <h1 style="color:black;">{{ user.username }}</h1>
+            </div>
+            <br/>
+
+            <!-- Account Control Buttons -->
+            <div class="row" style="align-items:center;margin-bottom:20px;">
+                <div class="col-md-3 align-self-center" align="center">
+                    <a href="/logout"><button type="button" class="btn btn-success" style="cursor:pointer;margin-bottom:5px;border-radius:15px;">Log Out</button></a>
+                </div>
+                <div class="col-md-3 align-self-center" align="center">
+                    <a href="/profile/changepass"><button type="button" class="btn btn-warning" style="cursor:pointer;margin-bottom:5px;border-radius:15px;">Change Password</button></a>
+                </div>
+                <div class="col-md-3 align-self-center" align="center">
+                    <a href="/profile/delete"><button type="button" class="btn btn-danger" style="cursor:pointer;margin-bottom:5px;border-radius:15px;">Delete Account</button></a>
+                </div>
+                <div class="col-md-3 align-self-center" align="center">
+                    <a href="https://ctt.ec/wFc5M"><button type="button" class="btn btn-info" style="cursor:pointer;margin-bottom:5px;border-radius:15px;">Request A Coin</button></a>
+                </div>
+            </div>
+
+            <!-- Divider Line -->
+            <div class="row" style="background-color:black;margin-bottom:20px;">
+                <div class="col-12"></div>
+            </div>
+
+            <!-- User's Ratings -->
+            <div class="row justify-content-center">
+            {% if noratings %}
+                <div class="row justify-content-center">
+                    <div class="col-9" style="text-align:center;">
+                        <h3 style="margin-top:15px;">You haven't rated any coins yet. <a href="/coins">Get cracking!</a></h3>
+                    </div>
+                </div>
+            {% endif %}
+            {% load staticfiles %}
+            {% for rating in ratings %}
+                <div class="col-lg-4" align="center" style="border:5px solid #eceeef;border-radius:15px;background-color:white;padding-top:10px;padding-bottom:10px;">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 style="padding-top:10px;border:5px solid rgba(0, 0, 0, 0.0)"><a href="/coins/{{ rating.coin.ticker }}" style="color:#024af4;">{{ rating.coin.name }}</a></h5>
+                            <h5 style="color:black;">{{ rating.category.category_name }}</h5>
+                        </div>
+                        <div class="col-2">
+                            {% with 'CoinViewer/logos/'|add:rating.coin.ticker|add:'.svg'|lower as image_static %}
+                                <img alt="{{ rating.coin.name }}" style="margin-top:20px;margin-bottom:20px;width:45px;height:45px;" src="{% static image_static %}">
+                            {% endwith %}
+                        </div>
+                        <div class="col-4">
+                            {% if rating.vote %}
+                                <div class="arrow-up-profile"></div>
+                            {% else %}
+                                <div class="arrow-down-profile"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if forloop.counter|divisibleby:3 %}
+                <div class="w-100"></div>
+                {% endif %}
+
+            {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    </body>
+
+{% endblock %}

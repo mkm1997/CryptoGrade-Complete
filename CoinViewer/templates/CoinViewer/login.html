@@ -1,0 +1,52 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <br/>
+    <body style="font-family:Ubuntu;background-color:white;">
+        <div class="container">
+            <div class="jumbotron" align="center" id="loginjt">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h1 style="color:black;">Please Enter Login Credentials</h1>
+                    <br/>
+                    <h5 style="color:black;">Don't have an account? <a href="/register" style="color:blue;">Register here.</a></h5>
+                    <br/>
+                    <p style="color:red">WARNING: Usernames and passwords are case-sensitive.</p>
+                    {% if invalid_creds %}
+                        <h3 style="color:red;">You entered invalid credentials. Please try again.</h3>
+                        <br/>
+                    {% endif %}
+                    {% if bad_captcha %}
+                        <h3 style="color:red;">Your captcha was invalid. Please try again.</h3>
+                        <br/>
+                    {% endif %}
+                    {% if acct_inactive %}
+                        <h3 style="color:red;">The credentials were valid but the account is inactive. Please contact administration for assistance.</h3>
+                        <br/>
+                    {% endif %}
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <input type="text" name="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="g-recaptcha" data-sitekey="6LeNPVEUAAAAAGNnazNsaBwtprmhtVGVJJaChj9T"></div>
+                    <br/>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <button style="cursor:pointer;border-radius:15px;" class="btn btn-lg btn-warning btn-block" type="submit">Sign in</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- /container -->
+    </body>
+
+{% endblock %}

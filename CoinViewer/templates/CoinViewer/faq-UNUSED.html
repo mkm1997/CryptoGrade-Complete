@@ -1,0 +1,71 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+
+<body style="font-family:Ubuntu;background-color:white;">
+
+    <br/>
+
+    <div class="container">
+        <div class="jumbotron" id="faqjumbo">
+
+            <h1 style="color:black;margin-bottom:20px;">Frequently Asked Questions</h1>
+
+            <div class="row" style="background-color:black;margin-bottom:20px;">
+                <div class="col-12"></div>
+            </div>
+
+            <h3 style="color:black;margin-bottom:15px;">Why am I unable to find a coin on here?</h3>
+            <p style="color:black;margin-bottom:25px;">In the interest of not having an overwhelming amount of information on our site, we have decided to initially limit the number of coins we are tracking sentiment for. More coins will be added in the future provided they meet the below criteria.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">What is the criteria for a cryptocurrency to be listed on CryptoGrade? </h3>
+            <p style="color:black;margin-bottom:25px;">We are initially starting with cryptocurrencies that can be found in the top 100 list based on market cap. We are continuously adding new coins to CryptoGrade! If you would like to request a coin to be added please use our <a href="https://docs.google.com/forms/d/e/1FAIpQLSdA64CT9suOShLDGGJN3IzpMMyea0e8lw_ldC6jmx8za5HPPg/viewform" style="color:blue;">Coin Request Form.</a></p>
+
+            <h3 style="color:black;margin-bottom:15px;">How is CryptoGrade different from other cryptocurrency rating sites?</h3>
+            <p style="color:black;margin-bottom:25px;">CryptoGrade is the only real time crowdsourced cryptocurrency rating platform that allows the public to fully decide the true community sentiment on many different factors to a certain coin. Other rating platforms such as Weiss decide a rank on their own and publish it. Considering how fast Cryptocurrency is changing, we feel this is not an accurate way to value a coin, especially for decentralized currencies. It’s counterintuitive! We leave it to the community to decide, because one organization should not decide the grade or sentiment of a coin.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">How often can I vote on a certain coin’s category?</h3>
+            <p style="color:black;margin-bottom:25px;">Registered users will be able to change their vote from "positive" to "negative" for any category at anytime. With that said you only get one vote per category.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">How is overall rating calculated?</h3>
+            <p style="color:black;margin-bottom:25px;">We take total positive votes and divide by total number of votes.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">How does the bucket vote system work?</h3>
+            <p style="color:black;margin-bottom:25px;">In an effort to keep these indicators as real-time as possible, we created a proprietary “bucket” voting algorithm. This is how it works: imagine a bucket, the size of the bucket is determined by the average daily voting volume on a coin. Say Bitcoin’s average daily voting volume on CryptoGrade is 25,000 votes. The bucket for Bitcoin will then be able to hold 25,000 votes. When the bucket is completely full, each new vote added to the bucket will result in the oldest vote in that bucket being discarded. By doing this, we keep the sentiment indicators as up to date with the market sentiment as possible. We do not want to have indicators with millions of votes that are from months ago. With the Bucket system, the sentiment indicators are always populated with the most up to date votes keeping the sentiment indication real-time.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">How did you pick the current voting categories for a coin? Do you plan on adding more?</h3>
+            <p style="color:black;margin-bottom:25px;">The CryptoGrade team believes that the current categories are the most important indicators of value to the public. We are open to hearing opinions about adding or removing any category that you feel strongly about. Please <a href="/contact" style="color:blue">contact</a> us if you would like to give your input.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">What is a verified user?</h3>
+            <p style="color:black;margin-bottom:25px;">A verified user is a user that has a large following or is widely known in the Cryptocurrency space. </p>
+
+            <h3 style="color:black;margin-bottom:15px;">What is the criteria to become a verified user?</h3>
+            <p style="color:black;margin-bottom:25px;">Verified users are selected by the CryptoGrade team. We verify users based on multiple aspects and are continuously looking to add more to our platform. If you feel that you have strong knowledge in the cryptocurrency space or have a large following on Twitter or Facebook and would like to help us bring CryptoGrade to more Cryptocurrency traders and investors, please reach out to us by using our <a href="/contact" style="color:blue">contact</a> form.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">Are there any benefits for being a verified user?</h3>
+            <p style="color:black;margin-bottom:25px;">Verified users are given a small check mark next to their name and are able to comment on individual categories of coins and offer their market expertise and feelings on the certain category sentiment. The opinions of verified users ARE ONLY opinions and NOT financial advice.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">Where are you pulling your price data?</h3>
+            <p style="color:black;margin-bottom:25px;">We are pulling our price data from the almighty coinmarketcap.com and would like to note that our price data may be just a tad behind what is showing on CMC’s site due to the API request limit.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">At what time is the day percent change calculation based?</h3>
+            <p style="color:black;margin-bottom:25px;">Midnight UTC.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">What is the number percentage breakdown for overall sentiment?</h3>
+            <p style="color:black;margin-bottom:5px;">0-20% = <span style="color:#af3434;">Overwhelmingly Negative</span></p>
+            <p style="color:black;margin-bottom:5px;">20-45% = <span style="color:#987419;">Negative</span></p>
+            <p style="color:black;margin-bottom:5px;">45-55% = <span style="color:#98981a;">Neutral</span></p>
+            <p style="color:black;margin-bottom:5px;">55-80% = <span style="color:#749819;">Positive</span></p>
+            <p style="color:black;margin-bottom:25px;">80-100% = <span style="color:#229819;">Overwhelmingly Positive</span></p>
+
+            <h3 style="color:black;margin-bottom:15px;">Is CryptoGrade financial advice?</h3>
+            <p style="color:black;margin-bottom:25px;">Absolutely not, please read our <a href="/disclaimer" style="color:blue;">disclaimer</a> here.</p>
+
+            <h3 style="color:black;margin-bottom:15px;">Do you offer an API for your data?</h3>
+            <p style="color:black;margin-bottom:25px;">Not yet, but this feature will be added in the near future.</p>
+
+        </div>
+    </div>
+
+</body>
+
+{% endblock %}

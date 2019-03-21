@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: white">
+
+<!-- HEADER -->
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114307508-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-116988319-1');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% if meta %}
+        <meta name="description" content="{{ meta }}">
+    {% else %}
+        <meta name="description" content="The leading community sentiment tracking and analysis platform for cryptocurrencies.">
+    {% endif %}
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>CryptoGrade</title>
+    {% endif %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'coinviewer/css/bootstrap.css' %}" type = "text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'coinviewer/css/cgstyle.css' %}" type = "text/css"/>
+    <link rel="icon" href="{% static 'coinviewer/favicon.ico' %}" type="image/x-icon"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script type="text/javascript" src="{% static 'coinviewer/js/jquery.tablesorter.js' %}"></script>
+    <script type="text/javascript" src="{% static 'coinviewer/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'coinviewer/js/particles.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'coinviewer/css/jquery-ui.css' %}">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'coinviewer/js/quicksearch.js' %}"></script>
+</head>
+
+<!-- PARTICLES -->
+{% if not noparticles %}
+    <div id="particles-js"></div>
+{% endif %}
+
+<!-- NAVBAR -->
+<br/>
+<div class="container">
+    <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md" id="mynav">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation" style="margin-top:5px">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a href="/"><img alt="CryptoGrade Logo" class="img-responsive" src="../../static/coinviewer/cg_logo.png" style="height:50px;margin-right:5px;"></a>
+
+        <div class="collapse navbar-collapse" id="containerNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/coins">COINS <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/faq">FAQ <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/about">ABOUT <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/contact">CONTACT <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <div class="form-inline my-2 my-md-0 mr-2">
+                <input id="searchbar" class="form-control mr-sm-2 ui-autocomplete-input" type="text" placeholder="Search Currencies">
+            </div>
+            <ul class="navbar-nav mr-0">
+                {% if user.is_authenticated %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/profile">{{ user.username }} <span class="sr-only">(current)</span></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/login">LOG IN / REGISTER <span class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<!-- BODY -->
+{% block content %}
+{% endblock %}
+
+<!-- FOOTER -->
+{% if not hasnofooter %}
+<div class="container">
+    <div class="jumbotron" id="footerjumbo">
+        <div class="row justify-content-center">
+            <h6 align="center">&copy; 2018 CryptoGrade LLC | <a href="/">Home</a> | <a href="/coins">Coins</a> | <a href="/faq">FAQ</a> | <a href="/about">About</a> | <a href="/disclaimer">Disclaimer</a> | <a rel="nofollow" href="https://ctt.ec/wFc5M" target="_blank">Request A Coin</a> | <a href="/contact">Contact Us</a></h6>
+            <a rel="nofollow" href="https://twitter.com/CryptoGrade"><img alt="Twitter Logo"width="25px" height="25px" style="margin-left:10px;margin-right:10px;transform:translate(0%, -15%)" src="{% static 'coinviewer/twitter_icon.png' %}"></a>
+        </div>
+    </div>
+</div>
+{% endif %}
+<script>
+$(document).ready(function () {
+
+    var interval = setInterval(Update, 1000*3600*12); // it will call the update function in every 12 hour
+});
+
+function Update() {
+
+$(document).ready(function(e){
+
+       //e.preventDefault();
+            $.ajax(
+            {
+                type:"POST",
+                url: "{%url 'update'%}",
+
+                success: function( data )
+                {
+
+                    console.log(data);
+
+                }
+            });
+            })
+ }
+
+</script>
+
+<!-- PARTICLES.JS -->
+<script type="text/javascript" src="{% static 'coinviewer/js/init_particles.js' %}"></script>
+
+</html>

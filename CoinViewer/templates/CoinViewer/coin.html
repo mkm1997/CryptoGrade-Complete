@@ -1,0 +1,365 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+
+<body style="font-family:Ubuntu;background-color:white;" id="overlay">
+
+    <br/>
+
+    {% if not exists %}
+        <div class="container">
+            <div class="jumbotron" align="center">
+                <h1 style="color:red">PAGE NOT FOUND</h1>
+                <p style="color:black">These aren't the droids you're looking for. <a href="/coins" style="color:blue">Return to coins list</a></p>
+                <p><a href="/faq" style="color:blue">Why can't I find a coin on here?</a></p>
+            </div>
+        </div>
+
+
+    {% else %}
+        <div class="container">
+            <div class="jumbotron" id="coinjt">
+
+                <!-- Stats Table -->
+                <div class="row justify-content-center" style="align-items:center">
+                    <div class="col-md-8">
+                        <table class="table table-hover table-striped table-sm table-responsive" id="minitable">
+                            <tbody>
+                                <tr style="font-weight:bold;">
+                                    <th>Ticker</th>
+                                    <th>Price (USD)</th>
+                                    <th>Total Votes</th>
+                                    <th>Pos Votes</th>
+                                    <th>Neg Votes</th>
+                                    <th>Day % Change</th>
+                                    <th style="padding-right:100px">Overall Sentiment</th>
+                                </tr>
+                                <tr>
+                                    <th>{{ coin.ticker }}</th>
+                                    <th>{{ coin.price_usd }}</th>
+                                    <th class="totalvotescell" style="font-weight:bold;">{{ coin.total_votes }}</th>
+                                    <th class="provotescell" style="color:#229819;font-weight:bold">{{ coin.total_votes_pro }}</th>
+                                    <th class="convotescell" style="color:#af3434;font-weight:bold">{{ coin.total_votes_con }}</th>
+                                    <th class="pctchgcell" style="color:{{ coin.pct_change_color }}">{{ coin.pct_change_day }}%</th>
+                                    <th class="sentdescrcell" style="color:{{ coin.total_sentiment_pct_color }}">{{ coin.total_sentiment_descr }}</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Back button -->
+                <div class="row justify-content-center text-center">
+                    <div class="col align-self-center">
+                        <a href="/coins"><button type="button" class="btn btn-outline-danger" style="cursor:pointer;border-radius:15px;">Return To Coins List</button></a>
+                    </div>
+                </div>
+                <br/>
+
+                <!-- Header Row -->
+                <div class="row" style="align-items: center;">
+                    <div class="col-md-3" align="center">
+                        {% load staticfiles %}
+                        {% with 'CoinViewer/logos/'|add:coin.ticker|add:'.svg'|lower as image_static %}
+                            <img alt="{{ coin.name }} Logo" class="img-responsive" src="{% static image_static %}" style="width:80px;height:80px;vertical-align: middle"/>
+                        {% endwith %}
+                    </div>
+                    <div class="col-md-6" align="center">
+                        <h1 style="padding-top:10px;border:5px solid rgba(0, 0, 0, 0.0)"><a rel="nofollow" href="https://coinmarketcap.com/currencies/{{ coin.cmc_id }}/" style="color:#024af4;" target="_blank">{{ coin.name }}</a></h1>
+                    </div>
+                    <div class="col-md-3" align="center">
+                        <p style="font-weight:bold;margin-top:5px;margin-bottom:0px;">OVERALL</p>
+                        <h2 class="totalsentimentpct" style="font-weight:bold;color:{{ coin.total_sentiment_pct_color }};">{{ coin.total_sentiment_pct }}%</h2>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="row justify-content-center" style="align-items:center;">
+                    <div class="col-md-8" align="center">
+                        <p style="color:#afafaf;padding:0px;margin:0px;">Need clarification on a category? Click the category name for a brief description.</p>
+                    </div>
+                </div>
+                <br/>
+
+                <!-- Main Content Row -->
+                <div class="row" style="align-items:center">
+                    <div class="col-md-12">
+                        <!-- Ratings -->
+                        <div class="row">
+                        {% load staticfiles %}
+                        {% for cat, has_vote, vote in cat_list %}
+
+                            <div class="col-lg-6">
+
+                            {% if forloop.counter|divisibleby:2 %}
+                                <div class="row" style="align-items:center;padding-top:5px;padding-bottom:5px;border-top:2px solid darkgray;">
+                            {% else %}
+                                <div class="row" style="align-items:center;padding-top:5px;padding-bottom:5px;border-top:2px solid darkgray;border-right:2px solid darkgray;">
+                            {% endif %}
+
+                                    <div class="col-sm-6 votescol" align="center">
+                                        <div class="row" style="align-items:center;">
+                                            <div class="col" style="padding-top:5px;">
+                                                <button class="btn btn-outline-secondary" style="border:0px transparent;border-radius:50px;padding: 17px 14px 9px 14px;cursor:help;" type="button" data-toggle="popover" data-placement="bottom" data-content="{{ cat.category.tooltip }}">
+                                                <h6 class="votespro" style="color:#0FCF0F;margin-bottom:3px;">{{ cat.category.pos_name }} (<span>{{ cat.votes_pro }}</span>)</h6>
+                                                    <h2 style="padding:0px;margin:0px;color:black;font-weight:bold;font-family:Ubuntu;text-transform:uppercase;">
+                                                        {{ cat.category.category_name }}
+                                                    </h2>
+                                                <h6 class="votescon" style="color:#ff4d4d;margin-top:3px;">{{ cat.category.neg_name }} (<span>{{ cat.votes_con }}</span>)</h6>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6" align="center">
+                                        <div class="row" style="align-items: center">
+                                            <div class="col-6">
+                                                <div style="width:100px;">
+
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <input name="category_id" class="catid" type="hidden" id="{{ cat.pk }}">
+
+                                                    {% if has_vote %}
+                                                        {% if vote.vote %}
+                                                            <div class="arrow-up"></div>
+                                                            <div class="auhidden" style="display:none;"></div>
+                                                        {% else %}
+                                                            <div class="arrow-up" style="border-bottom-color:#4f4f4f"></div>
+                                                            <div class="auhidden" style="display:none;border-bottom-color:#4f4f4f"></div>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <div class="arrow-up" style="border-bottom-color:#4f4f4f"></div>
+                                                        <div class="auhidden" style="display:none;border-bottom-color:#4f4f4f"></div>
+                                                    {% endif %}
+
+                                                    <div class="ratingcircleoverlay" >
+                                                        <div class="greenzone" style="height:{{ cat.px_green }}px;"></div>
+                                                        <div class="redzone" style="height:{{ cat.px_red }}px;"></div>
+                                                    </div>
+
+                                                    {% if has_vote %}
+                                                        {% if not vote.vote %}
+                                                            <div class="arrow-down"></div>
+                                                            <div class="adhidden" style="display:none;"></div>
+                                                        {% else %}
+                                                            <div class="arrow-down" style="border-top-color:#4f4f4f"></div>
+                                                            <div class="adhidden" style="display:none;border-top-color:#4f4f4f"></div>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <div class="arrow-down" style="border-top-color:#4f4f4f"></div>
+                                                        <div class="adhidden" style="display:none;border-top-color:#4f4f4f"></div>
+                                                    {% endif %}
+
+                                                </form>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6 ratingcol" style="padding-top:8px;">
+                                                <h4 style="font-weight:bold">{{ cat.px_green }}%</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                            {% cycle '' '<div class="w-100"></div>' %}
+
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center" style="margin-top:30px;text-align:center;">
+                    <p style="color:#afafaf">Have a potential improvement, issue, or suggestion for our voting system? Please <a href="/contact" style="color:#8f8fcf">contact us</a> to provide information</p>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+</body>
+
+
+<script>
+// Enable popovers
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+// Arrow voting behavior
+$(document).ready(function(){
+
+    // Set behavior of up arrows ---------------------------------------------------------------------------------------
+    $(".arrow-up").click(function upvote(){
+        $(".arrow-down").hide();
+        $(".arrow-up").hide();
+        $(".auhidden").show();
+        $(".adhidden").show();
+        var self = $(this);
+
+        if ($(this).css("borderBottomColor") == "rgb(79, 79, 79)") {
+
+            if ($(this).siblings(".arrow-down").css("borderTopColor") == "rgb(255, 77, 77)") {
+                $(this).siblings(".arrow-down").animate({ borderTopColor: "#4f4f4f" }, 'slow');
+                $(this).siblings(".adhidden").animate({ borderTopColor: "#4f4f4f" }, 'slow');
+            }
+
+            $(this).animate({ borderBottomColor: "#66ff66" }, 'slow');
+            $(this).siblings(".auhidden").animate({ borderBottomColor: "#66ff66" }, 'slow');
+
+        } else {
+            $(this).animate({ borderBottomColor: "#4f4f4f" }, 'slow');
+            $(this).siblings(".auhidden").animate({ borderBottomColor: "#4f4f4f" }, 'slow');
+        }
+
+        $.post("/coins/{{ coin.ticker }}/",
+            {
+                action: "upvote",
+                category_id: $(this).siblings(".catid").attr("id")
+            },
+            function(data, status){
+                if (data['bad_data_refresh']) {
+                    location.reload(true)
+                } else {
+                    self.siblings(".ratingcircleoverlay").find(".greenzone").animate({height: data['px_green']}, function () {
+                        setTimeout(function () {
+                            $(".arrow-down").show();
+                            $(".arrow-up").show();
+                            $(".auhidden").hide();
+                            $(".adhidden").hide();
+                        }, 500);
+                    });
+                    self.siblings(".ratingcircleoverlay").find(".redzone").animate({height: 100 - data['px_green']});
+                    self.parent().parent().parent().siblings('.ratingcol').find("h4").text(data['px_green'] + "%");
+                    self.parent().parent().parent().parent().parent().siblings('.votescol').find('.votespro').find('span').text(data['votes_pro']);
+                    self.parent().parent().parent().parent().parent().siblings('.votescol').find('.votescon').find('span').text(data['votes_con']);
+                    $(".totalvotescell").text(data['total_votes']);
+                    $(".provotescell").text(data['total_votes_pro']);
+                    $(".convotescell").text(data['total_votes_con']);
+                    $(".pctchgcell").text(data['pct_chg_day'].toFixed(2) + "%").css({color: data['pct_chg_color']});
+                    $(".sentdescrcell").text(data['total_sentiment_descr']).css({color: data['total_sentiment_pct_color']});
+                    $(".totalsentimentpct").text(data['total_sentiment_pct'].toFixed(2) + "%").css({color: data['total_sentiment_pct_color']});
+                }
+            });
+    });
+
+    // Set behavior of down arrows -------------------------------------------------------------------------------------
+    $(".arrow-down").click(function downvote(){
+        $(".arrow-down").hide();
+        $(".arrow-up").hide();
+        $(".auhidden").show();
+        $(".adhidden").show();
+        var self = $(this);
+
+        // Get necessary variables
+        var category_id = $(this).siblings(".catid").attr("id");
+
+        if ($(this).css("borderTopColor") == "rgb(79, 79, 79)") {
+
+            if ($(this).siblings(".arrow-up").css("borderBottomColor") == "rgb(102, 255, 102)") {
+                $(this).siblings(".arrow-up").animate({ borderBottomColor: "#4f4f4f" }, 'slow');
+                $(this).siblings(".auhidden").animate({ borderBottomColor: "#4f4f4f" }, 'slow');
+            }
+
+            $(this).animate({ borderTopColor: "#ff4d4d" }, 'slow');
+            $(this).siblings(".adhidden").animate({ borderTopColor: "#ff4d4d" }, 'slow');
+
+        } else {
+            $(this).animate({ borderTopColor: "#4f4f4f" }, 'slow');
+            $(this).siblings(".adhidden").animate({ borderTopColor: "#4f4f4f" }, 'slow');
+        }
+
+        $.post("/coins/{{ coin.ticker }}/",
+            {
+                action: "downvote",
+                category_id: category_id
+            },
+            function(data, status){
+                if (data['bad_data_refresh']) {
+                    location.reload(true)
+                } else {
+                    self.siblings(".ratingcircleoverlay").find(".greenzone").animate({height: data['px_green']}, function () {
+                        setTimeout(function () {
+                            $(".arrow-down").show();
+                            $(".arrow-up").show();
+                            $(".auhidden").hide();
+                            $(".adhidden").hide();
+                        }, 500);
+                    });
+                    self.siblings(".ratingcircleoverlay").find(".redzone").animate({height: 100 - data['px_green']});
+                    self.parent().parent().parent().siblings('.ratingcol').find("h4").text(data['px_green'] + "%");
+                    self.parent().parent().parent().parent().parent().siblings('.votescol').find('.votespro').find('span').text(data['votes_pro']);
+                    self.parent().parent().parent().parent().parent().siblings('.votescol').find('.votescon').find('span').text(data['votes_con']);
+                    $(".totalvotescell").text(data['total_votes']);
+                    $(".provotescell").text(data['total_votes_pro']);
+                    $(".convotescell").text(data['total_votes_con']);
+                    $(".pctchgcell").text(data['pct_chg_day'].toFixed(2) + "%").css({color: data['pct_chg_color']});
+                    $(".sentdescrcell").text(data['total_sentiment_descr']).css({color: data['total_sentiment_pct_color']});
+                    $(".totalsentimentpct").text(data['total_sentiment_pct'].toFixed(2) + "%").css({color: data['total_sentiment_pct_color']});
+                }
+            });
+    });
+
+});
+$(function() {
+
+
+    // This function gets cookie with a given name
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    /*
+    The functions below will create a header with csrftoken
+    */
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    function sameOrigin(url) {
+        // test that a given url is a same-origin URL
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                // Send the token to same-origin, relative URLs only.
+                // Send the token only if the method warrants CSRF protection
+                // Using the CSRFToken value acquired earlier
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+});
+</script>
+
+
+{% endblock %}

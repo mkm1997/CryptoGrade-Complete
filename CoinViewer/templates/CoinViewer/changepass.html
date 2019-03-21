@@ -1,0 +1,66 @@
+{% extends 'CoinViewer/header.html' %}
+{% block content %}
+
+    <br/>
+    <body style="font-family:Ubuntu;background-color:white;">
+        <div class="container">
+            <div class="jumbotron" align="center" id="loginjt">
+            {% if changed %}
+
+                <h2 style="color:green;">Your password was successfully changed!</h2>
+                <br/>
+                <a href="/login"><button type="button" class="btn btn-warning" style="cursor:pointer;">Return to Login</button></a>
+
+            {% else %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <h1 style="color:black;">Change Password</h1>
+                    <br/>
+                    {% if invalid_creds %}
+                        <h3 style="color:red;">Your current password was entered incorrectly.</h3>
+                        <br/>
+                    {% endif %}
+                    {% if mismatch %}
+                        <h3 style="color:red;">You didn't enter matching passwords.</h3>
+                        <br/>
+                    {% endif %}
+                    {% if tooshortpassword %}
+                        <h3 style="color:red;">Passwords must be at least 8 characters long.</h3>
+                        <br/>
+                    {% endif %}
+                    <p>Please enter your current password:</p>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <input type="password" name="inputCurrentPass" class="form-control" placeholder="Enter Current Password" required autofocus>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <input type="password" name="inputCurrentPass2" class="form-control" placeholder="Verify Current Password" required>
+                        </div>
+                    </div>
+                    <br/>
+                    <p>Please enter your new password:</p>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <input type="password" name="inputNewPass" class="form-control" placeholder="Enter New Password" required>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <input type="password" name="inputNewPass2" class="form-control" placeholder="Verify New Password" required>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <button style="cursor:pointer;border-radius:15px;" class="btn btn-lg btn-warning btn-block" type="submit">Change</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+            </div>
+        </div> <!-- /container -->
+    </body>
+
+{% endblock %}

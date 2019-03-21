@@ -1,0 +1,321 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
+#mytable {
+    border:solid #b7b7b7 3px;
+    border-top-left-radius:15px;
+    border-top-right-radius:15px;
+    -moz-border-radius:6px;
+    color:black;
+    background-color:#b7b7b7;
+    text-shadow:none;
+}
+
+#coinrequestbutton {
+    background-color:#b7b7b7;
+    padding-top: 12px;
+    padding-bottom: 15px;
+    border-bottom-left-radius:15px;
+    border-bottom-right-radius:15px;
+    margin-top:0px;
+    margin-bottom:30px;
+}
+
+#minitable {
+    border-left:solid #b7b7b7 3px;
+    border-right:solid #b7b7b7 3px;
+    border-bottom:solid #b7b7b7 3px;
+    border-bottom-left-radius:15px;
+    border-bottom-right-radius:15px;
+    -moz-border-radius:6px;
+    color:black;
+    text-shadow:none;
+    margin-bottom:30px;
+}
+
+#mynav {
+    border:solid gray 3px;
+    border-radius: 15px;
+    text-shadow:none;
+    background-color: rgba(255,255,255,0.8);
+    font-weight: bold
+}
+
+#particles-js {
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:0;
+}
+
+#overlay {
+    position: relative;
+}
+
+#coinjt {
+    padding-top:0px;
+    padding-bottom: 15px;
+    border-radius:15px;
+    text-shadow: none;
+}
+
+#loginjt {
+    padding-top:30px;
+    padding-bottom:30px;
+    border-radius:15px;
+    border:3px solid yellow;
+    text-shadow:none;
+}
+
+#registerjt {
+    padding-top:30px;
+    padding-bottom:30px;
+    border-radius:15px;
+    border:3px solid red;
+    text-shadow:none;
+}
+
+#profilejt {
+    padding-top:30px;
+    padding-bottom:30px;
+    border-radius:15px;
+    border:3px solid lightgray;
+    text-shadow:none;
+}
+
+#imgjumbo {
+    width: 100%;
+    height:90px;
+    padding: 0px;
+    margin-bottom:0px;
+    z-index:10;
+    overflow:hidden;
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+    border-top-left-radius:15px;
+    border-top-right-radius:15px;
+    background-color:#b7b7b7;
+    background-size: cover;
+}
+
+th.headerSortUp {
+    background-color: #979797;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th.headerSortDown {
+    background-color: #979797;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#homeimgjumbo {
+    width: 100%;
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    margin-bottom:0px;
+    z-index:10;
+    overflow:hidden;
+    border-radius:0px;
+    background-color: rgba(255, 255, 255, 0.8);
+    background-size: cover;
+}
+
+#topfourcoins {
+    width: 100%;
+    margin: 0px;
+    z-index:10;
+    overflow:hidden;
+    border-radius: 15px 15px 0px 0px;
+    background-size: cover;
+    align-items:center;
+    text-shadow: none;
+    border-left:3px solid #4f4f4f;
+    border-right:3px solid #4f4f4f;
+    border-top:3px solid #4f4f4f;
+    background-color: rgba(92, 184, 92, 0.95);
+    padding:10px;
+}
+
+#bottomfourcoins {
+    width: 100%;
+    margin: 0px;
+    z-index:10;
+    overflow:hidden;
+    border-radius: 0px;
+    background-size: cover;
+    border-left:3px solid #4f4f4f;
+    border-right:3px solid #4f4f4f;
+    border-bottom:3px solid #4f4f4f;
+    align-items:center;
+    text-shadow: none;
+    background-color: rgba(217, 83, 79, 0.95);
+    padding:10px;
+}
+
+#homepageblurbs {
+    width: 100%;
+    margin-top: 0px;
+    z-index:10;
+    overflow:hidden;
+    border-radius: 0px 0px 15px 15px;
+    background-size: cover;
+    border:3px solid #4f4f4f;
+    align-items:center;
+    text-shadow: none;
+    background-color: rgba(220, 220, 220, 0.95);
+}
+
+
+#topfourrow {
+    border-right:2px solid white;
+}
+
+#faqjumbo {
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-radius: 15px;
+    text-shadow: none;
+}
+
+#footerjumbo {
+    width: 100%;
+    padding-top:10px;
+    padding-bottom: 5px;
+    padding-right:25px;
+    padding-left:25px;
+    border-radius: 15px;
+    text-shadow: none;
+    font-weight: bold;
+    align-items: center;
+    background-color:#b7b7b7;
+}
+
+a {
+    color: blue;
+}
+
+h6 {
+    color:black;
+}
+
+p {
+    color:black;
+}
+
+
+#searchbar {
+    width:300px;
+}
+
+td {
+    border-bottom:1px solid black;
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    position: relative;
+    margin-top:10px;
+    margin-bottom:10px;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 30px solid;
+    border-bottom-color: #66ff66;
+    border-radius:5px;
+    cursor: pointer;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    position: relative;
+    margin-top:10px;
+    margin-bottom:10px;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 30px solid;
+    border-top-color: #ff4d4d;
+    border-radius:5px;
+    cursor: pointer;
+}
+
+.auhidden {
+    width: 0;
+    height: 0;
+    position: relative;
+    margin-top:10px;
+    margin-bottom:10px;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 30px solid;
+    border-bottom-color: #66ff66;
+    border-radius:5px;
+    cursor: pointer;
+}
+
+.adhidden {
+    width: 0;
+    height: 0;
+    position: relative;
+    margin-top:10px;
+    margin-bottom:10px;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 30px solid;
+    border-top-color: #ff4d4d;
+    border-radius:5px;
+    cursor: pointer;
+}
+
+.ratingcircleoverlay {
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    border:3px solid black;
+    overflow:hidden;
+    z-index: 1;
+
+    position: relative;
+}
+
+.greenzone {
+    background-color:#66ff66;
+    width:100px;
+    border-bottom:2px solid black;
+}
+
+.redzone {
+    background-color:#ff4d4d;
+    width:100px;
+}
+
+.arrow-up-profile {
+    width: 0;
+    height: 0;
+    position: relative;
+    margin-top:20px;
+    margin-bottom:20px;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 45px solid;
+    border-bottom-color: #66ff66;
+    border-radius:5px;
+}
+
+.arrow-down-profile {
+    width: 0;
+    height: 0;
+    position: relative;
+    margin-top:20px;
+    margin-bottom:20px;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 45px solid;
+    border-top-color: #ff4d4d;
+    border-radius:5px;
+}
